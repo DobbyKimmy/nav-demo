@@ -1,0 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+#main{
+    text-align: center;
+}
+#wrapper{
+    display: inline-block;
+}
+#wrapper div:nth-child(2){
+    margin-left: 2em;
+}
+#wrapper div:nth-child(3){
+    margin-left: 4em;
+}
+#wrapper div kbd{
+    text-transform: uppercase;
+    display: inline-block;
+    width: 4em;
+    height: 4em;
+    border: 1px solid red;
+    position: relative;
+}
+#wrapper div kbd button{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+#wrapper div kbd:hover button{
+    display: inline-block;
+}
