@@ -3,31 +3,66 @@
     margin: 0;
 }
 #main{
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: gray url("./wallhaven-162218-min.jpg") no-repeat center center;
+    background-size: cover;
 }
-#wrapper{
+.wrapper{
+    background: rgba(255,255,255,0.2);
+    border-radius: 16px;
+}
+.inner{
+    margin: 22px;
+}
+.wrapper div:nth-child(2){
+    margin-left: 22px;
+}
+.wrapper div:nth-child(3){
+    margin-left: 72px;
+}
+.wrapper div kbd.letters{
     display: inline-block;
-}
-#wrapper div:nth-child(2){
-    margin-left: 2em;
-}
-#wrapper div:nth-child(3){
-    margin-left: 4em;
-}
-#wrapper div kbd{
+    width: 68px;
+    height: 54px;
+    margin: 12px 10px;
+    border: 1px solid #373737;
+    border-radius: 6px;
+    background: linear-gradient(to bottom, #111111 0%,#292929 100%);
+    box-shadow: 0 0 0 1px #1A1B1C,0 0 0 2px #1F2020,0 2px 0 2px #080808;
+    font-size: 18px;
+    color: #C5C5C5;
     text-transform: uppercase;
-    display: inline-block;
-    width: 4em;
-    height: 4em;
-    border: 1px solid red;
+    font-size: 18px;
+    font-family: Helvetica;
     position: relative;
 }
-#wrapper div kbd button{
+.wrapper div kbd.letters span{
     position: absolute;
-    right: 0;
-    bottom: 0;
-    display: none;
+    left: 4px;
+    top: 4px;
 }
-#wrapper div kbd:hover button{
+.wrapper div kbd.letters button{
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #fbfbfb 0%,#9f9c96 100%);
+    color: #FFFFFF;
+    display: none;
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+}
+.wrapper div kbd.letters:hover button{
     display: inline-block;
+}
+.wrapper div kbd.letters img{
+    position: absolute;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
 }

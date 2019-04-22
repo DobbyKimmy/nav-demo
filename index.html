@@ -2,65 +2,135 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>我的导航</title>
+    <title>我的网址导航</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <header></header>
-    <main id="main">
-        <div id="wrapper" class="wrapper">
-
-        </div>
-    </main>
-    <footer></footer>
+    <main id="main"></main>
     <script>
-        var keys = {
-            0:{0:'q',1:'w',2:'e',3:'r',4:'t',5:'y',6:'u',7:'i',8:'o',9:'p',length:10},
-            1:{0:'a',1:'s',2:'d',3:'f',4:'g',5:'h',6:'j',7:'k',8:'l',length:9},
-            2:{0:'z',1:'x',2:'c',3:'v',4:'b',5:'n',6:'m',length:7},
-            length:3
+        // 初始化
+        var init = init();
+        var keys = init.keys;
+        var hash = init.hash;
+        // 生成键盘
+        createKeyboard(keys,hash);
+        /*========================================*/
+        //keypress
+        document.onkeypress = function (keypress) {
+            window.open('http://'+hash[keypress.key],'_blank');
         }
-       var hash = {
-           q:'qq.com',
-           w:'weibo.com',
-           e:'ele.me',
-           r:'renren.com',
-           t:'tianya.com',
-           y:'youtube.com',
-           u:'ubuntu.com',
-           i:'iqiyi.com',
-           o:'opera.com',
-           p:undefined,
-           a:'alibaba.com',
-           z:'zhihu.com',
-           m:'mukewang.com'
-       }
-       var hashInLocalStorage = JSON.parse(localStorage.getItem('zzz')||'null')
-        if(hashInLocalStorage){
-            hash = hashInLocalStorage
+
+        // func:在父标签中添加子标签
+        function appendChild(fatherTag,childTag) {
+            fatherTag.appendChild(childTag);
         }
-       for(var i=0;i<keys.length;i++){
-           keyRow = document.createElement('div')
-           for(var j=0;j<keys[i].length;j++){
-               keyboard = document.createElement('kbd')
-               keyboard.textContent = keys[i][j]
-               btn = document.createElement('button')
-               btn.textContent = 'E'
-               btn.id = keys[i][j]
-               btn.onclick = function(click){
-                   editContent = prompt("请输入一个网址")
-                   hash[click.target.id] = editContent
-                   localStorage.setItem('zzz',JSON.stringify(hash))
-               }
-               keyboard.appendChild(btn)
-               keyRow.appendChild(keyboard)
-           }
-           wrapper.appendChild(keyRow)
-       }
-       document.onkeypress = function (keypress) {
-           key = keypress.key
-           window.open('http://'+hash[key],'_blank')
-       }
+        // func:在标签中指定contentText
+        function innerText(tag,textContent) {
+            tag.textContent = textContent;
+        }
+        // func:在标签中创建id
+        function creatId(tag,idName) {
+            tag.id = idName;
+        }
+        // func:在标签中创建类名
+        function creatClass(tag,className){
+            tag.className = className;
+        }
+        // func:创建标签
+        function createTag(tagName) {
+            var element = document.createElement(tagName);
+            return element;
+        }
+        // func: init
+        function init() {
+            // 初始化键盘所有的键，及键所对应的hash
+            var keys = {
+                0:{0:'q',1:'w',2:'e',3:'r',4:'t',5:'y',6:'u',7:'i',8:'o',9:'p',length:10},
+                1:{0:'a',1:'s',2:'d',3:'f',4:'g',5:'h',6:'j',7:'k',8:'l',length: 9},
+                2:{0:'z',1:'x',2:'c',3:'v',4:'b',5:'n',6:'m',length:7},
+                length:3
+            }
+            var hash = {
+                q:'www.qq.com',
+                w:'www.weibo.com',
+                e:'ele.me',
+                r:'www.renren.com',
+                t:'www.tudou.com',
+                y:'youtube.com',
+                u:'www.ubuntu.com',
+                i:'iqiyi.com',
+                o:'opera.com',
+                p:'www.python.org',
+                a:'www.apple.com/cn',
+                s:'www.sohu.com',
+                d:'www.douyu.com',
+                f:'fanyi.youdao.com',
+                g:'www.google.com',
+                h:'nba.hupu.com',
+                j:'www.jd.com',
+                k:'www.kakaocorp.com',
+                l:'www.lol.com',
+                z:'www.zhihu.com',
+                x:'www.mi.com',
+                c:'www.china.com',
+                v:'www.vivo.com.cn',
+                b:'www.bilibili.com',
+                n:'www.naver.com',
+                m:'www.imooc.com',
+                length:26
+            }
+            var hashInLocalStorage = JSON.parse(localStorage.getItem('newDomain')||'null');
+            if(hashInLocalStorage){
+                hash = hashInLocalStorage;
+            }
+            return {
+                keys:keys,hash:hash
+            }
+        }
+        // 创建键盘
+        function createKeyboard(keys,hash) {
+            var wrapper = createTag('div');
+            creatClass(wrapper,'wrapper');
+            appendChild(main,wrapper);
+            var inner = createTag('div');
+            creatClass(inner,'inner');
+            appendChild(wrapper,inner);
+            for(var i=0;i<keys.length;i++){
+                var div = createTag('div');
+                for(var j=0;j<keys[i].length;j++){
+                    var kbd = createTag('kbd');
+                    creatClass(kbd,'letters');
+                    var span = createTag('span');
+                    creatClass(span,keys[i][j]);
+                    innerText(span,keys[i][j]);
+                    var btn = createTag('button');
+                    innerText(btn,'e');
+                    creatId(btn,keys[i][j]);
+                    btn.onclick = function(click){
+                        var domain = prompt("Please enter a domain");
+                        hash[click.target.id] = domain;
+                        click.target.previousElementSibling.src = 'http://'+domain+'/favicon.ico';
+                        localStorage.setItem('newDomain',JSON.stringify(hash));
+                    }
+
+                    var favicon = createTag('img');
+                    if(hash[keys[i][j]]){
+                        favicon.src = 'http://'+hash[keys[i][j]]+'/favicon.ico';
+                    }else{
+                        favicon.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
+                    }
+                    favicon.onerror = function(error){
+                        error.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
+                    }
+
+                    appendChild(kbd,favicon);
+                    appendChild(kbd,btn);
+                    appendChild(kbd,span)
+                    appendChild(div,kbd);
+                }
+                appendChild(inner,div);
+            }
+        }
     </script>
 </body>
 </html>
